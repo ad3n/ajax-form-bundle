@@ -23,8 +23,10 @@ class AbstractAjaxFieldType
             'use_ajax' => true,
             'script' => null,
             'method' => 'POST',
-            'action' => null,
             'function' => null,
+        ));
+        $resolver->setRequired(array(
+            'action' => null,
         ));
     }
 
