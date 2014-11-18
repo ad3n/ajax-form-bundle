@@ -8,6 +8,9 @@
         <service id="xform.form.type.xchoice" class="Ihsan\AjaxFormBundle\Form\AjaxChoiceFieldType">
             <tag name="form.type" alias="xchoice"/>
         </service>
+        <service id="xform.form.type.xentity" class="Ihsan\AjaxFormBundle\Form\AjaxEntityFieldType">
+            <tag name="form.type" alias="xentity"/>
+        </service>
         <service id="xform.form.type.xtext" class="Ihsan\AjaxFormBundle\Form\AjaxTextFieldType">
             <tag name="form.type" alias="xtext"/>
         </service>

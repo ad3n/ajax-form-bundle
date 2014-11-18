@@ -19,8 +19,9 @@ class AjaxChoiceFieldType extends AbstractAjaxFieldType
     {
         parent::setDefaultOptions($resolver);
 
+        $resolver->setRequired(array('target'));
         $resolver->setDefaults(array(
-            'target' => null,
+            'event' => 'onchange',
         ));
     }
 
@@ -31,6 +32,6 @@ class AjaxChoiceFieldType extends AbstractAjaxFieldType
 
     public function getName()
     {
-        return 'choice_ajax';
+        return 'xchoice';
     }
 } 

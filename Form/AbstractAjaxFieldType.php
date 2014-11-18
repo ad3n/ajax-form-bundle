@@ -8,11 +8,12 @@
  **/
 namespace Ihsan\AjaxFormBundle\Form;
 
+use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class AbstractAjaxFieldType
+abstract class AbstractAjaxFieldType extends AbstractType
 {
     /**
      * @param OptionsResolverInterface $resolver
@@ -23,10 +24,16 @@ class AbstractAjaxFieldType
             'use_ajax' => true,
             'script' => null,
             'method' => 'POST',
+            'event' => 'onkeydown',
             'function' => null,
         ));
-        $resolver->setRequired(array(
-            'action' => null,
+
+        $resolver->setOptional(array('target', 'event'));
+        $resolver->setRequired(array('action'));
+
+        $resolver->setAllowedValues(array(
+            'method' => array('post', 'get', 'POST', 'GET'),
+            'event' => array('onchange', 'onkeydown'),
         ));
     }
 
@@ -52,7 +59,7 @@ class AbstractAjaxFieldType
             } else {
                 $options['function'] = $options['function'] ?: sprintf('fn_%s', uniqid());
 
-                if (isset($options['choices']) && ! empty($options['choices'])) {
+                if ('onchange' === $options['event']) {
                     $view->vars['attr']['onchange'] = sprintf('%s(this); return false;', $options['function']);
                 } else {
                     $view->vars['attr']['onkeydown'] = sprintf('if (13 === event.keyCode) { event.preventDefault(); %s(this); return false; }', $options['function']);
@@ -64,7 +71,7 @@ class AbstractAjaxFieldType
 function %function%() {
     jQuery.ajax({
         type: '%method%',
-        url: '%url%',
+        url: Routing.generate(%url%),
         data: {value: field.value},
         success: function(data) {
             %target%
@@ -75,7 +82,13 @@ function %function%() {
 EOD;
                 $success = 'field.value = data;';
                 if (isset($options['target'])) {
-                    $success = sprintf('jQuery("%s").val(data)');
+                    $success = sprintf('jQuery("%s").val(data)', $options['target']['selector']);
+                }
+
+                if ('GET' === strtoupper($options['method'])) {
+                    $options['action'] = sprintf('\'%s\', {id: field.value}', $options['action']);
+                } else {
+                    $options['action'] = sprintf('\'%s\'', $options['action']);
                 }
 
                 $view->vars['script'] = strtr($view->vars['script'], array(
