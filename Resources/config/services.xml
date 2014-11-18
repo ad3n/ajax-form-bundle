@@ -1,0 +1,15 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+        <service id="xform.form.type.xchoice" class="Ihsan\AjaxFormBundle\Form\AjaxChoiceFieldType">
+            <tag name="form.type" alias="xchoice"/>
+        </service>
+        <service id="xform.form.type.xtext" class="Ihsan\AjaxFormBundle\Form\AjaxTextFieldType">
+            <tag name="form.type" alias="xtext"/>
+        </service>
+    </services>
+</container>

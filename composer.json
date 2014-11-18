@@ -1,0 +1,29 @@
+{
+    "name": "ihsanudin/xform-bundle",
+    "type": "symfony-bundle",
+    "description": "Perform Ajax in Your Form",
+    "keywords": ["Form", "Ajax", "Form Ajax"],
+    "homepage": "http://github.com/ihsanudin/ajax-form-bundle",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Muhammad Surya Ihsanuddin",
+            "email": "surya.kejawen@gmail.com"
+        },
+        {
+            "name": "SymfonyId",
+            "homepage": "https://github.com/SymfonyId"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "php": ">=5.3.2",
+        "symfony/form": "~2.3"
+    },
+    "require-dev": {
+        "symfony/yaml": "~2.3"
+    },
+    "autoload": {
+        "psr-4": { "Ihsan\\AjaxFormBundle\\": "" }
+    }
+}
