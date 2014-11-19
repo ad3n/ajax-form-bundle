@@ -23,7 +23,7 @@ abstract class AbstractAjaxFieldType extends AbstractType
         $resolver->setDefaults(array(
             'use_ajax' => true,
             'script' => null,
-            'method' => 'POST',
+            'method' => 'GET',
             'event' => 'onkeydown',
             'function' => null,
         ));
@@ -68,7 +68,7 @@ abstract class AbstractAjaxFieldType extends AbstractType
                 $view->vars['script'] =
 <<<EOD
 <script type="text/javascript">
-function %function%() {
+function %function%(field) {
     jQuery.ajax({
         type: '%method%',
         url: Routing.generate(%url%),
