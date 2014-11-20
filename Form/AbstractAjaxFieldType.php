@@ -28,7 +28,7 @@ abstract class AbstractAjaxFieldType extends AbstractType
             'function' => null,
         ));
 
-        $resolver->setOptional(array('target', 'event'));
+        $resolver->setOptional(array('target', 'event', 'function'));
         $resolver->setRequired(array('action'));
 
         $resolver->setAllowedValues(array(
@@ -80,9 +80,13 @@ function %function%(field) {
 }
 </script>
 EOD;
-                $success = 'field.value = data;';
+                $success = '';
                 if (isset($options['target'])) {
-                    $success = sprintf('jQuery("%s").val(data)', $options['target']['selector']);
+                    if (isset($options['target']['handler'])) {
+                        $success = sprintf($options['target']['handler'], $options['target']['selector']);
+                    } else {
+                        $success = sprintf('jQuery("%s").val(data)', $options['target']['selector']);
+                    }
                 }
 
                 if ('GET' === strtoupper($options['method'])) {
