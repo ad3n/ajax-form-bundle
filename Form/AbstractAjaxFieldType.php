@@ -57,7 +57,7 @@ abstract class AbstractAjaxFieldType extends AbstractType
             if ($options['script']) {
                 $view->vars['script'] = sprintf('<script type="text/javascript">%s</script>', $options['script']);
             } else {
-                $options['function'] = $options['function'] ?: sprintf('fn_%s', uniqid());
+                $options['function'] = $options['function'] ?: sprintf('fn_%s_%s', uniqid(), $form->getName());
 
                 if ('onchange' === $options['event']) {
                     $view->vars['attr']['onchange'] = sprintf('%s(this); return false;', $options['function']);
@@ -83,7 +83,7 @@ EOD;
                 $success = '';
                 if (isset($options['target'])) {
                     if (isset($options['target']['handler'])) {
-                        $success = sprintf($options['target']['handler'], $options['target']['selector']);
+                        $success = strtr($options['target']['handler'], array('%this%' => $options['target']['selector']));
                     } else {
                         $success = sprintf('jQuery("%s").val(data)', $options['target']['selector']);
                     }
