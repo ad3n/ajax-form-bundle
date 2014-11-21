@@ -83,7 +83,7 @@ EOD;
                 $success = '';
                 if (isset($options['target'])) {
                     if (isset($options['target']['handler'])) {
-                        $success = strtr($options['target']['handler'], array('%this%' => $options['target']['selector']));
+                        $success = strtr($options['target']['handler'], array('%target-selector%' => $options['target']['selector']));
                     } else {
                         $success = sprintf('jQuery("%s").val(data)', $options['target']['selector']);
                     }
